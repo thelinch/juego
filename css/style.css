@@ -8,6 +8,16 @@ div.caracteristica{
     margin-bottom: 15px;
     padding:15px 0; 
     
+    
+}
+@keyframes start{
+    from{color:white;font-size: 2rem}
+    to{color: yellow;font-size: 4rem}
+}
+i.animacion{
+    animation-name: start;
+    animation-duration: 800ms;
+    animation-iteration-count: 1;
 }
 div.card-content{
     overflow-y: scroll;
@@ -24,11 +34,17 @@ p.numero{
     background: #f3e5f5 ;
     border-radius: 50%;
 }
-p#positivo{
+p.positivo{
     color: #004d40;
 }
-p#negativo{
+p.negativo{
     color: #d50000 ;
+}
+img{
+height: 100%;
+}
+.inline_block{
+    display: inline-block;
 }
 div#resultado{
     position: absolute;
