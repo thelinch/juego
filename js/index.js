@@ -13,7 +13,7 @@ var caracteristicas = [{
     nombre: "Compatibilidad",
     identificador: "003",
     subcaracteristicas: ["Coexistencia", "Interoperatibilidad"],
-    texto: "apacidad de dos o más sistemas o componentes para intercambiar información y/o llevar a cabo sus funciones requeridas "
+    texto: "capacidad de dos o más sistemas o componentes para intercambiar información y/o llevar a cabo sus funciones requeridas "
 }, {
     nombre: "Usabilidad",
     identificador: "004",
@@ -58,11 +58,11 @@ var template_carta = `<div class="card hoverable subCaracteristica">
 Este es una carta
 </div>`;
 var icon = $("i#icon");
-var colores = ["#3949ab", "#512da8", "#00b0ff", "#18ffff", "#e91e63", "#c51162", "#ff9100", "#212121"];
+var colores = ["#69f0ae", "#69f0ae", "#18ffff", "#b388ff", "#ff8a80", "#ea80fc ", "#b0bec5", "#ffe57f"];
 
 $(document).ready(function () {
     caracteristicas.forEach(element => {
-        agregacionTemplateCaracteristicas(element.nombre, "#caracteristicas", colores[Math.round(Math.random() * colores.length - 1)], element.identificador, element.texto)
+        agregacionTemplateCaracteristicas(element.nombre, "#caracteristicas", colores[Math.round(Math.random() * colores.length - 1)], element.identificador, element)
         element.subcaracteristicas.forEach(subcaracteristicas => {
             agregacionTemplateSub(subcaracteristicas, "#subCaracteristicas", colores[Math.round(Math.random() * colores.length - 1)], Math.round(Math.random() * 50), element.identificador)
         })
@@ -78,8 +78,7 @@ $(document).ready(function () {
             comparacion($(this).attr("data-identificador"), $(ui.draggable).attr("data-identificador"), ui.draggable, this)
         }
     });
-
-
+    $( ".card" ).tooltip({show: { effect: "explode", duration: 800 }});
 })
 function agregacionTemplateSub(Nombre, identificado, colorFondo, zindex, identificadorPadre) {
     let template = `<div class="card hoverable subCaracteristica dragable" data-identificador=${identificadorPadre} style="background:${colorFondo};z-index:${zindex}">
@@ -117,9 +116,10 @@ function fallidos(elementoDrop) {
     $("i#icon").html("mood_bad")
     return false;
 }
-function agregacionTemplateCaracteristicas(Nombre, identificador, colorFondo, identificadorPadre, texto) {
+function agregacionTemplateCaracteristicas(Nombre, identificador, colorFondo, identificadorPadre, elemento) {
+    
     let template = ` <div class="col s12 m3 " style="position:relative" >
-    <div class="card small  hoverable caracteristica"  data-identificador=${identificadorPadre} style="background:${colorFondo}">
+    <div class="card small  hoverable caracteristica" title='${elemento.texto}' data-identificador=${identificadorPadre} style="background:${colorFondo}">
     <div class="card-content">
     <span class="card-title activator grey-text text-darken-4">${Nombre}
                         <i class="material-icons right">star_border</i>
