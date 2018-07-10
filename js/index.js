@@ -106,7 +106,7 @@ $(document).ready(function () {
 function agregacionTemplateSub(Nombre, identificado, colorFondo, zindex, identificadorPadre, tooltip) {
     let template = `<div class="card hoverable subCaracteristica dragable" title='${tooltip}' data-identificador=${identificadorPadre} style="background:${colorFondo};z-index:${zindex}">
 <div class="front">
-<h4 style="color:white"> ${Nombre}</h4> 
+<h4> ${Nombre}</h4> 
 </div>
 
 </div>`;
@@ -122,8 +122,8 @@ function comparacion(caracteristicaNumero, SubCaNumero, elementoDrag, elementoDr
         estado = fallidos(elementoDrpp)
     }
     let TextoElementoDrag = $(elementoDrag).find("h4").text();
-    $(elementoDrpp).find("ul#resultados").append(`<ol>${TextoElementoDrag}<i class="material-icons " style="color:${estado ? 'green' : 'red'}">${estado ? 'check' : 'close'}</i></ol>`)
-    console.log("estado" + estado, $(elementoDrpp).find("ul#resultados"))
+    $(elementoDrpp).find("ul.resultados").append(`<ol >${TextoElementoDrag}<i class="material-icons " style="color:${estado ? 'green' : 'red'}">${estado ? 'check' : 'close'}</i></ol>`)
+    console.log("estado" + estado, $(elementoDrpp).find("ul.resultados"))
 
     $(elementoDrag).remove();
 }
@@ -167,8 +167,8 @@ function agregacionTemplateCaracteristicas(Nombre, identificador, colorFondo, id
     
                         
                     <div class="divider"></div>
-                    <div id="re">
-                    <ul id="resultados">
+                    <div class="re">
+                    <ul class="resultados overflow">
     
                     </ul>
                     </div>

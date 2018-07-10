@@ -37,6 +37,24 @@ p.numero{
 p.positivo{
     color: #004d40;
 }
+ul.resultados{
+    height: 140px;
+}
+ol{
+    padding: 0;
+}
+
+.overflow{
+    overflow-y: scroll;
+    scrollbar-3dlight-color:#ffd700;
+    scrollbar-arrow-color:#ff0;
+    scrollbar-base-color:#ff6347;
+    scrollbar-darkshadow-color:#ffa500;
+    scrollbar-face-color:#008080;
+    scrollbar-highlight-color:#ff69b4;
+    scrollbar-shadow-color:#f0f
+
+}
 p.negativo{
     color: #d50000 ;
 }
