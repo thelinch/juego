@@ -1,3 +1,5 @@
+/*Autor="Antony Inga Atunga" */
+/*Es la variable en donde se registran todas las caracteristicas y subcaracteristicas con sus conceptos */
 var caracteristicas = [{
     nombre: "Adecuacion Funcional",
     identificador: "001",
@@ -85,9 +87,9 @@ var colores = ["#69f0ae", "#69f0ae", "#18ffff", "#b388ff", "#ff8a80", "#ea80fc "
 
 $(document).ready(function () {
     caracteristicas.forEach(element => {
-        agregacionTemplateCaracteristicas(element.nombre, "#caracteristicas", colores[Math.round(Math.random() * colores.length - 1)], element.identificador, element)
+        templateCaracteristica(element.nombre, "#caracteristicas", colores[Math.round(Math.random() * colores.length - 1)], element.identificador, element.texto)
         element.subcaracteristicas.forEach(subcaracteristicas => {
-            agregacionTemplateSub(subcaracteristicas.nombre, "#subCaracteristicas", colores[Math.round(Math.random() * colores.length - 1)], Math.round(Math.random() * 50), element.identificador, subcaracteristicas.texto)
+         templateSubCaracteristica(subcaracteristicas.nombre, "#subCaracteristicas", colores[Math.round(Math.random() * colores.length - 1)], Math.round(Math.random() * 50), element.identificador, subcaracteristicas.texto)
         })
     });
     $(".dragable").draggable({
@@ -103,27 +105,36 @@ $(document).ready(function () {
     });
     $(".card").tooltip({ show: { effect: "explode", duration: 500, delay: 700 }, position: { my: "left center", at: "right center" } });
 })
-function agregacionTemplateSub(Nombre, identificado, colorFondo, zindex, identificadorPadre, tooltip) {
+
+/*Con este metodo se crea las subcaracteristicas*/
+/* Nombre="Nombre de las subcaracteristica"
+identificador=Identificador de la subcaracteristica que sirve para Jquey
+colorFondo=Sera el background de la subcaracteristica
+zindex=Indicara la posicion en el eje Z 
+identificadorPadre=Cada subcaracteristica tiene identificador del padre que servira si esa subcaracteristica pertenece a la caracteristica
+tooltip=texto informativo de la caracteristica*/
+function templateSubCaracteristica(nombre, identificador, colorFondo, zindex, identificadorPadre, tooltip) {
     let template = `<div class="card hoverable subCaracteristica dragable" title='${tooltip}' data-identificador=${identificadorPadre} style="background:${colorFondo};z-index:${zindex}">
 <div class="front">
-<h4> ${Nombre}</h4> 
+<h4> ${nombre}</h4> 
 </div>
 
 </div>`;
-    $(identificado).append(template)
+    $(identificador).append(template)
 }
 function comparacion(caracteristicaNumero, SubCaNumero, elementoDrag, elementoDrpp) {
-    let estado = true;
+   
     console.log(caracteristicaNumero, SubCaNumero)
+    let estado=false;
     if (parseInt(caracteristicaNumero) == parseInt(SubCaNumero)) {
-        estado = aciertos(elementoDrpp)
+      estado=  aciertos(elementoDrpp)
         activarEstrella(elementoDrpp);
     } else {
-        estado = fallidos(elementoDrpp)
+        estado= fallidos(elementoDrpp)
     }
     let TextoElementoDrag = $(elementoDrag).find("h4").text();
     $(elementoDrpp).find("ul.resultados").append(`<ol >${TextoElementoDrag}<i class="material-icons " style="color:${estado ? 'green' : 'red'}">${estado ? 'check' : 'close'}</i></ol>`)
-    console.log("estado" + estado, $(elementoDrpp).find("ul.resultados"))
+   
 
     $(elementoDrag).remove();
 }
@@ -133,12 +144,13 @@ function aciertos(elementoDrop) {
     $("p.acierto strong").text((parseInt($("p.acierto strong").text()) + 1));
     $("i#icon").html("mood")
     return true;
+ 
 }
 function fallidos(elementoDrop) {
     $(elementoDrop).find("p.negativo").text(parseInt($(elementoDrop).find("p.negativo").text()) + 1)
     $("p.fallido strong").text((parseInt($("p.fallido strong").text()) + 1))
     $("i#icon").html("mood_bad")
-    return false;
+  return false;
 }
 function activarEstrella(elementoDrag) {
     $(elementoDrag).find("i.start").animate({
@@ -151,14 +163,21 @@ function activarEstrella(elementoDrag) {
             }
         })
 }
-function agregacionTemplateCaracteristicas(Nombre, identificador, colorFondo, identificadorPadre, elemento) {
+/*El metodo se encargara de agregar las caracteristicas al DOM 
+nombre=Nombre de la caracteristica
+identificador=sera el id de la caracteristica
+colorFondo=el background de la caracteristica
+identificadorPadre=es el id de la subcaracteristica que servira para ver si la subcaracteristica pertenece 
+a la caracteristica
+tooltip=texto informativo de la caracteristica*/
+function templateCaracteristica(nombre, identificador, colorFondo, identificadorPadre, tooltip) {
 
     let template = ` <div class="col s12 m3 " style="position:relative" >
-    <div class="card small  hoverable caracteristica" title='${elemento.texto}' data-identificador=${identificadorPadre} style="background:${colorFondo}">
+    <div class="card small  hoverable caracteristica" title='${tooltip}' data-identificador=${identificadorPadre} style="background:${colorFondo}">
     <div class="card-content">
     <div class="row">
     <div class="col s10">
-    <span class="card-title activator grey-text text-darken-4">${Nombre}</span>
+    <span class="card-title activator grey-text text-darken-4">${nombre}</span>
     </div>
     <div class="col s2">
     <i class="material-icons right start small">star_border</i>
