@@ -12,100 +12,69 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body style="background-color:#e3f2fd; ">
-
+<body>
     <div class="row">
-        <div class="col s12">
-            <div class="row valign-wrapper">
-                <div class="col s12 m8">
-                    <h4 class="tituloPrincipal" style="text-align:right;color: #7b1fa2;font-weight: bold;">Jugando y Aprendiendo La ISO 25010</h4>
-
-                </div>
-                <div class="col s12 m4">
-                    <img src="/css/assets/imagen.png" alt="Like" class="inline_block" style="width: 80px; height: 80px;">
+        <div class="col s12 m4">
+            <h4 style="color: #7b1fa2;font-weight: bold;">Sub Caracteristicas</h4>
+            <div class="row">
+                <div class="col s12 m10" id="subCaracteristicas" style="position: relative; height: 150px;">
 
                 </div>
             </div>
+
+
+
 
         </div>
+        <div class="col m2">
+            <div class="reset row" style="visibility: hidden;">
+                <h4 style="text-align: center">Ahorcado</h4>
+                <div class="col s12">
+                    <img id="imagen" src="" alt="">
 
-    </div>
-    <div class="row" id="caracteristicas">
-
-
-    </div>
-
-
-    <div class="divider"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col s12 m8  ">
-                <h4 style="color: #7b1fa2;font-weight: bold;">Sub Caracteristicas</h4>
-                <div class="row">
-                    <div class="col s12 m6" id="subCaracteristicas" style="position: relative; height: 150px;">
-
-                    </div>
+                </div>
+                <div class="col s12 corazones">
+                    <a class="primero waves-effect waves-light btn-floating disabled right"><i class="material-icons">cached</i></a>
                 </div>
 
 
+
             </div>
-            <div class="col s12 m4 cyan lighten-5">
-                <h4 style="text-align: center;color: #7b1fa2;font-weight: bold;">Puntaje del juego</h4>
+        </div>
+        <div class="col m6">
+            <h3 >Carateristicas</h3>
+            <ul class=" collapsible popout" id="caracteristicas">
+
+
+            </ul>
+            <div class="col s12 m8 cyan lighten-5">
                 <div class="row">
                     <div class="col s12 m6">
-                        <p class="fallido">Fallidos Totales:
+                        <p class="fallido">Puntos Mal:
                             <strong style="color: red;font-weight: bold">0</strong>
                         </p>
-                        <p class="acierto">Aciertos Totales:
+                        <p class="acierto">Puntos Buenos:
                             <strong style="color: green;font-weight: bold">0</strong>
                         </p>
                     </div>
-                    <div class="col s12 m6">
-
-                        <i class="large material-icons" id="icon">mood</i>
-                    </div>
-
-
                 </div>
-
-
             </div>
-
-
         </div>
-
-
     </div>
 
-    <footer class="page-footer  purple lighten-1">
-        <div class="container">
-            <div class="row">
-                <div class="col l4 s12">
-                    <h5 class="white-text">Informacion complementaria</h5>
-                    <p class="grey-text text-lighten-4">Para ver la documentacion del juego:<a href="https://docs.google.com/document/d/1sXAUbHMwb29Ox46ZS7838xI2dwlWKuY_vInH1Sdtvz4/edit?usp=sharing" target="blank">Documentacion</a> </p>
-                </div>
-                <div class="col l6 offset-l2 s12">
-                    <h5 class="white-text">Desarrolladores</h5>
-                    <ul>
-                        <li>
-                            <p>Garcia Amaro Paola:<b>p.garcia@unas.edu.pe</b></p>
-                            
-                        </li>
-                        <li>
-                            <p>Inga Atunga Antony:<b>antony.inga@unas.edu.pe</p>
-                        </li>
-                        
-                    </ul>
-                </div>
-            </div>
+
+
+
+    <div class="divider"></div>
+    <div class="row ">
+        <div class="col s12 m4">
+            <span>Desarrollado por:</span>
+            <p>Pablo Moises</p>
         </div>
-        <div class="footer-copyright">
-            <div class="container">
-                © 2018 Copyright Text
-            </div>
-        </div>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    </div>
+
+
+    <script src="./js/jquery-3.0.0.min.js"></script>
     <script src="js/materialize.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="js/index.js"></script>

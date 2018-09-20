@@ -73,6 +73,10 @@ var caracteristicas = [{
     { nombre: "Capacidad de ser reemplazado", texto: "Capacidad del producto para ser utilizado en lugar de otro producto software determinado con el mismo propósito y en el mismo entorno." }],
     texto: "Esta característica representa la capacidad del producto software para ser modificado efectiva y eficientemente"
 }]
+var contadorFallidas = 1;
+var numeroFallidas = 8;
+var numeroIntentos = 0;
+var elementoReset = $("div.reset");
 var template_carta = `<div class="card hoverable subCaracteristica">
 <div class="front">
 
@@ -84,28 +88,39 @@ Este es una carta
 </div>`;
 var icon = $("i#icon");
 var colores = ["#69f0ae", "#69f0ae", "#18ffff", "#b388ff", "#ff8a80", "#ea80fc ", "#b0bec5", "#ffe57f"];
-
+var NumeroVidas = 2;
 $(document).ready(function () {
+    crecionTemplate();
+    eventoDrag();
+    eventoDroppable();
+    $(".carta").tooltip({ show: { effect: "explode", duration: 500, delay: 700 }, position: { my: "left center", at: "right center" } });
+    $('.collapsible').collapsible();
+    creacionCorazones();
+    clickReset();
+})
+function crecionTemplate() {
     caracteristicas.forEach(element => {
         templateCaracteristica(element.nombre, "#caracteristicas", colores[Math.round(Math.random() * colores.length - 1)], element.identificador, element.texto)
         element.subcaracteristicas.forEach(subcaracteristicas => {
-         templateSubCaracteristica(subcaracteristicas.nombre, "#subCaracteristicas", colores[Math.round(Math.random() * colores.length - 1)], Math.round(Math.random() * 50), element.identificador, subcaracteristicas.texto)
+            templateSubCaracteristica(subcaracteristicas.nombre, "#subCaracteristicas", colores[Math.round(Math.random() * colores.length - 1)], Math.round(Math.random() * 50), element.identificador, subcaracteristicas.texto)
         })
     });
+}
+function eventoDrag() {
     $(".dragable").draggable({
         opacity: 0.70,
         cursor: "move",
         helper: "original",
 
     });
+}
+function eventoDroppable() {
     $(".caracteristica").droppable({
         drop: function (event, ui) {
             comparacion($(this).attr("data-identificador"), $(ui.draggable).attr("data-identificador"), ui.draggable, this)
         }
     });
-    $(".card").tooltip({ show: { effect: "explode", duration: 500, delay: 700 }, position: { my: "left center", at: "right center" } });
-})
-
+}
 /*Con este metodo se crea las subcaracteristicas*/
 /* Nombre="Nombre de las subcaracteristica"
 identificador=Identificador de la subcaracteristica que sirve para Jquey
@@ -114,7 +129,7 @@ zindex=Indicara la posicion en el eje Z
 identificadorPadre=Cada subcaracteristica tiene identificador del padre que servira si esa subcaracteristica pertenece a la caracteristica
 tooltip=texto informativo de la caracteristica*/
 function templateSubCaracteristica(nombre, identificador, colorFondo, zindex, identificadorPadre, tooltip) {
-    let template = `<div class="card hoverable subCaracteristica dragable" title='${tooltip}' data-identificador=${identificadorPadre} style="background:${colorFondo};z-index:${zindex}">
+    let template = `<div class="card carta hoverable subCaracteristica dragable" title='${tooltip}' data-identificador=${identificadorPadre} style="background:${colorFondo};z-index:${zindex}">
 <div class="front">
 <h4> ${nombre}</h4> 
 </div>
@@ -123,20 +138,59 @@ function templateSubCaracteristica(nombre, identificador, colorFondo, zindex, id
     $(identificador).append(template)
 }
 function comparacion(caracteristicaNumero, SubCaNumero, elementoDrag, elementoDrpp) {
-   
+
     console.log(caracteristicaNumero, SubCaNumero)
-    let estado=false;
+    let estado = false;
     if (parseInt(caracteristicaNumero) == parseInt(SubCaNumero)) {
-      estado=  aciertos(elementoDrpp)
+        estado = aciertos(elementoDrpp)
         activarEstrella(elementoDrpp);
     } else {
-        estado= fallidos(elementoDrpp)
+        estado = fallidos(elementoDrpp)
     }
     let TextoElementoDrag = $(elementoDrag).find("h4").text();
     $(elementoDrpp).find("ul.resultados").append(`<ol >${TextoElementoDrag}<i class="material-icons " style="color:${estado ? 'green' : 'red'}">${estado ? 'check' : 'close'}</i></ol>`)
-   
+
 
     $(elementoDrag).remove();
+    cambiarImagenAhorcado(estado)
+}
+function cambiarImagenAhorcado(isIgual) {
+    if (!isIgual) {
+
+        if (contadorFallidas == numeroFallidas) {
+            culminacionJuego();
+        } else {
+            $("img#imagen").attr("src", "./img/ahorcado_" + contadorFallidas + ".PNG")
+        }
+        contadorFallidas++;
+    }
+}
+function culminacionJuego() {
+    $(".dragable").draggable("disable");
+    $("a.primero").removeClass("disabled")
+
+}
+
+
+function clickReset() {
+
+    $("a.primero").on("click", function () {
+        if (numeroIntentos < NumeroVidas) {
+            contadorFallidas = 1;
+            ;
+
+            $("img#imagen").attr("src", "./img/ahorcado_" + contadorFallidas + ".PNG")
+            $(".dragable").draggable("enable");
+            $("i#vida_" + (numeroIntentos+1)).text("cancel")
+            $(this).addClass("disabled")
+            numeroIntentos++
+            console.log("numero Intentos" + numeroIntentos)
+            return;
+        } else {
+            alert("Ya no tiene mas Vidas")
+        }
+        console.log("numero intentos" + numeroIntentos, "numero Vidad" + NumeroVidas)
+    })
 }
 function aciertos(elementoDrop) {
     elemnetoPositivo = $(elementoDrop).find("p.positivo");
@@ -144,13 +198,14 @@ function aciertos(elementoDrop) {
     $("p.acierto strong").text((parseInt($("p.acierto strong").text()) + 1));
     $("i#icon").html("mood")
     return true;
- 
+
 }
 function fallidos(elementoDrop) {
     $(elementoDrop).find("p.negativo").text(parseInt($(elementoDrop).find("p.negativo").text()) + 1)
     $("p.fallido strong").text((parseInt($("p.fallido strong").text()) + 1))
     $("i#icon").html("mood_bad")
-  return false;
+    elementoReset.css("visibility", "visible")
+    return false;
 }
 function activarEstrella(elementoDrag) {
     $(elementoDrag).find("i.start").animate({
@@ -163,6 +218,13 @@ function activarEstrella(elementoDrag) {
             }
         })
 }
+function creacionCorazones() {
+    for (let index = 1; index <= NumeroVidas; index++) {
+        let templateCorazon = `<i class="material-icons corazon" id="vida_${index}">favorite</i>`
+        $(".corazones").append(templateCorazon)
+    }
+
+}
 /*El metodo se encargara de agregar las caracteristicas al DOM 
 nombre=Nombre de la caracteristica
 identificador=sera el id de la caracteristica
@@ -172,19 +234,14 @@ a la caracteristica
 tooltip=texto informativo de la caracteristica*/
 function templateCaracteristica(nombre, identificador, colorFondo, identificadorPadre, tooltip) {
 
-    let template = ` <div class="col s12 m3 " style="position:relative" >
-    <div class="card small  hoverable caracteristica" title='${tooltip}' data-identificador=${identificadorPadre} style="background:${colorFondo}">
-    <div class="card-content">
-    <div class="row">
-    <div class="col s10">
-    <span class="card-title activator grey-text text-darken-4">${nombre}</span>
-    </div>
-    <div class="col s2">
+    let template = ` 
+    <li class="col s12 m8 carta caracteristica" style="position:relative" title='${tooltip}' data-identificador=${identificadorPadre} >
+    <div  class="collapsible-header  activator grey-text text-darken-4"   style="background:${colorFondo}"> 
     <i class="material-icons right start small">star_border</i>
+    ${nombre}
     </div>
-    </div>
-    
-                        
+    <div class="collapsible-body  hoverable " >
+    <div class="">                       
                     <div class="divider"></div>
                     <div class="re">
                     <ul class="resultados overflow">
@@ -195,15 +252,11 @@ function templateCaracteristica(nombre, identificador, colorFondo, identificador
                       
     </div>
     
-
-    
-
-<div id="resultado">
-<p class="numero positivo" >0</p>
-<p class="numero  negativo" >0</p>
-</div>
-
-
-    </div>`
+    </div>
+    <div id="resultado">
+    <p class="numero positivo" >0</p>
+    <p class="numero  negativo" >0</p>
+    </div>
+    </li>`
     $(identificador).append(template);
 }

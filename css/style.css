@@ -64,10 +64,23 @@ height: 100%;
 .inline_block{
     display: inline-block;
 }
+i.corazon{
+    font-size: 30px;
+    color: red;
+}
+.corazones{
+    display: flex;
+justify-content: space-around;
+align-items: center;
+
+}
+a.primero{
+    order: 3;
+}
 div#resultado{
     position: absolute;
-    top: -15%;
-    left: 0%;
+    top: -13%;
+    left: 110%;
     display: flex;
     width: 25%;
     align-content: space-between; 
