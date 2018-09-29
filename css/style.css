@@ -74,6 +74,16 @@ justify-content: space-around;
 align-items: center;
 
 }
+.position_absolute{
+    position: absolute !important;
+}
+.top{
+    top: 0;
+
+}
+.left{
+    left: 0;
+}
 a.primero{
     order: 3;
 }

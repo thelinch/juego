@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body style="position: relative;">
     <div class="row">
         <div class="col s12 m4">
             <h4 style="color: #7b1fa2;font-weight: bold;">Sub Caracteristicas</h4>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="col m6">
-            <h3 >Carateristicas</h3>
+            <h3>Carateristicas</h3>
             <ul class=" collapsible popout" id="caracteristicas">
 
 
@@ -54,7 +54,7 @@
                             <strong style="color: red;font-weight: bold">0</strong>
                         </p>
                         <p class="acierto">Puntos Buenos:
-                            <strong style="color: green;font-weight: bold">0</strong>
+                            <strong style="color: green;font-weight: bold" id="puntosBuenos">0</strong>
                         </p>
                     </div>
                 </div>
@@ -73,6 +73,13 @@
         </div>
     </div>
 
+    <div id="modal1" class="modal" style="background: black;">
+        <div class="modal-content">
+            <h4 style="color:white;text-align: center">FELICIDADES COMPLETO EL RETO</h4>
+            <img src="./img/final.gif" alt="">
+        </div>
+
+    </div>
 
     <script src="./js/jquery-3.0.0.min.js"></script>
     <script src="js/materialize.min.js"></script>

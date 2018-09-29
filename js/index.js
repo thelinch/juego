@@ -73,7 +73,7 @@ var caracteristicas = [{
     { nombre: "Capacidad de ser reemplazado", texto: "Capacidad del producto para ser utilizado en lugar de otro producto software determinado con el mismo propósito y en el mismo entorno." }],
     texto: "Esta característica representa la capacidad del producto software para ser modificado efectiva y eficientemente"
 }]
-var contadorFallidas = 1;
+var contadorFallidas = 0;
 var numeroFallidas = 8;
 var numeroIntentos = 0;
 var elementoReset = $("div.reset");
@@ -89,6 +89,7 @@ Este es una carta
 var icon = $("i#icon");
 var colores = ["#69f0ae", "#69f0ae", "#18ffff", "#b388ff", "#ff8a80", "#ea80fc ", "#b0bec5", "#ffe57f"];
 var NumeroVidas = 2;
+var instance;
 $(document).ready(function () {
     crecionTemplate();
     eventoDrag();
@@ -97,6 +98,16 @@ $(document).ready(function () {
     $('.collapsible').collapsible();
     creacionCorazones();
     clickReset();
+    var element = $('.modal').modal({
+        opacity: 1,
+        onOpenStart: function () {
+            console.log("se abro")
+        },
+        dismissible: false
+
+    });
+    instance = M.Modal.getInstance(element)
+
 })
 function crecionTemplate() {
     caracteristicas.forEach(element => {
@@ -114,9 +125,16 @@ function eventoDrag() {
 
     });
 }
+function felizidad() {
+    if (parseInt($("#puntosBuenos").text()) == 31){
+        instance.open()
+    }
+
+}
 function eventoDroppable() {
     $(".caracteristica").droppable({
         drop: function (event, ui) {
+
             comparacion($(this).attr("data-identificador"), $(ui.draggable).attr("data-identificador"), ui.draggable, this)
         }
     });
@@ -153,6 +171,7 @@ function comparacion(caracteristicaNumero, SubCaNumero, elementoDrag, elementoDr
 
     $(elementoDrag).remove();
     cambiarImagenAhorcado(estado)
+    felizidad()
 }
 function cambiarImagenAhorcado(isIgual) {
     if (!isIgual) {
@@ -160,7 +179,7 @@ function cambiarImagenAhorcado(isIgual) {
         if (contadorFallidas == numeroFallidas) {
             culminacionJuego();
         } else {
-            $("img#imagen").attr("src", "./img/ahorcado_" + contadorFallidas + ".PNG")
+            $("img#imagen").attr("src", "./img/ahorcado_" + (contadorFallidas + 1) + ".PNG")
         }
         contadorFallidas++;
     }
@@ -176,12 +195,12 @@ function clickReset() {
 
     $("a.primero").on("click", function () {
         if (numeroIntentos < NumeroVidas) {
-            contadorFallidas = 1;
+            contadorFallidas = 0;
             ;
 
-            $("img#imagen").attr("src", "./img/ahorcado_" + contadorFallidas + ".PNG")
+            $("img#imagen").attr("src", "./img/ahorcado_" + (contadorFallidas + 1) + ".PNG")
             $(".dragable").draggable("enable");
-            $("i#vida_" + (numeroIntentos+1)).text("cancel")
+            $("i#vida_" + (numeroIntentos + 1)).text("cancel")
             $(this).addClass("disabled")
             numeroIntentos++
             console.log("numero Intentos" + numeroIntentos)
